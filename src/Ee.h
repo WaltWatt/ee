@@ -1,6 +1,7 @@
 #ifndef EE_EE_H
 #define EE_EE_H
 
+namespace ee {
 class Ee
 {
 public:
@@ -10,5 +11,6 @@ public:
 	int exec();
 private:
 };
+} // namespace ee
 
 #endif // EE_EE_H

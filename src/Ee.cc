@@ -3,6 +3,8 @@
 #include "Ee.h"
 #include "ui/Tui.h"
 
+using namespace ee;
+
 Ee::Ee(const int &argc, char **argv)
 {
 	puts("Ee constructor called...");
