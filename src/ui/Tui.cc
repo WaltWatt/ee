@@ -50,7 +50,9 @@ public:
 	{
 		while (1){
 			char c = '\0';
-			read(STDIN_FILENO, &c, 1);
+			if (read(STDIN_FILENO, &c, 1) == -1 && errno != EAGAIN) {
+				throw std::runtime_error("Tui::exec(): read() returned -1");
+			}
 			if (iscntrl(c)) {
 				printf("%d\r\n", c);
 			} else {
