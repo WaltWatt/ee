@@ -9,7 +9,7 @@ Tui::Tui()
 	tcgetattr(STDIN_FILENO, &_orig_termios);
 
 	struct termios raw = _orig_termios;
-	raw.c_lflag &= ~(ECHO | ICANON);
+	raw.c_lflag &= ~(ECHO | ICANON | ISIG);
 
 	tcsetattr(STDIN_FILENO, TCSAFLUSH, &raw);
 

@@ -4,7 +4,7 @@
 #include <unistd.h>
 #include <termios.h>
 
-class Tui 
+class Tui
 {
 public:
 	Tui();
