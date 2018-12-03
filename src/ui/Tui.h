@@ -1,8 +1,6 @@
 #ifndef EE_TUI_H
 #define EE_TUI_H
 
-#include <unistd.h>
-#include <termios.h>
 #include <memory>
 
 namespace ee {
