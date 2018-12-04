@@ -50,17 +50,8 @@ public:
 
 	int exec()
 	{
-		while (1){
-			char c = '\0';
-			if (read(STDIN_FILENO, &c, 1) == -1 && errno != EAGAIN) {
-				throw std::runtime_error("Tui::exec(): read() returned -1");
-			}
-			if (iscntrl(c)) {
-				printf("%d\r\n", c);
-			} else {
-				printf("%d ('%c')\r\n", c, c);
-			}
-			if (c == CTRL_KEY('q')) break;
+		while (uiReadKey() != CTRL_KEY('q')){
+			//uiProcessKeypress();
 		}
 		return 0;
 	}
@@ -75,6 +66,31 @@ private:
 					"Tui::disableRawMode(): tcsetattr() returned -1");
 		}
 	}
+
+	char uiReadKey()
+	{
+		int nread;
+		char c;
+		while ((nread = read(STDIN_FILENO, &c, 1)) != 1) {
+			if (nread == -1 && errno != EAGAIN) {
+				throw std::runtime_error("Tui::exec(): read() returned -1");
+			}
+		}
+		return c;
+	}
+
+	/*
+	void uiProcessKeypress()
+	{
+		char c = uiReadKey();
+		switch (c) {
+			case CTRL_KEY('q'):
+				//ToDo: pass to mode_
+				exit(0);
+				break;
+		}
+	}
+	*/
 };
 
 Tui::Tui() : impl_(new TuiImpl) {}
