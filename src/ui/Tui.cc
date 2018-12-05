@@ -37,6 +37,7 @@ public:
 
 	~TuiImpl()
 	{
+		//refreshScreeen();
 		try {
 			disableRawMode();
 		}
@@ -79,7 +80,7 @@ private:
 		char c;
 		while ((nread = read(STDIN_FILENO, &c, 1)) != 1) {
 			if (nread == -1 && errno != EAGAIN) {
-				throw std::runtime_error("Tui::exec(): read() returned -1");
+				throw std::runtime_error("Tui::readKey(): read() returned -1");
 			}
 		}
 		return c;
@@ -88,7 +89,18 @@ private:
 	void refreshScreeen()
 	{
 		write(STDOUT_FILENO, "\x1b[2J", 4);
+		write(STDOUT_FILENO, "\x1b[H", 3);
+		drawRows();
+		write(STDOUT_FILENO, "\x1b[H", 3);
 	}
+
+	void drawRows() {
+		int y;
+		for (y = 0; y < 24; y++) {
+			write(STDOUT_FILENO, "~\r\n", 3);
+		}
+	}
+
 
 	/*
 	Now in exec():
