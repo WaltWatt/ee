@@ -50,8 +50,14 @@ public:
 
 	int exec()
 	{
-		while (uiReadKey() != CTRL_KEY('q')){
-			//uiProcessKeypress();
+		while (1) {
+			refreshScreeen();
+			char c = readKey();
+			switch (c) {
+				case CTRL_KEY('q'):
+					//ToDo: pass to mode_
+					return 0;
+			}
 		}
 		return 0;
 	}
@@ -67,7 +73,7 @@ private:
 		}
 	}
 
-	char uiReadKey()
+	char readKey()
 	{
 		int nread;
 		char c;
@@ -79,15 +85,21 @@ private:
 		return c;
 	}
 
-	/*
-	void uiProcessKeypress()
+	void refreshScreeen()
 	{
-		char c = uiReadKey();
+		write(STDOUT_FILENO, "\x1b[2J", 4);
+	}
+
+	/*
+	Now in exec():
+
+	void processKeypress()
+	{
+		char c = readKey();
 		switch (c) {
 			case CTRL_KEY('q'):
 				//ToDo: pass to mode_
-				exit(0);
-				break;
+				return;
 		}
 	}
 	*/
